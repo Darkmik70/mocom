@@ -1,0 +1,6 @@
+function R = ComputeAngleAxis(theta,v)
+% EXPLAIN IT 
+skew = [0 0 0; 0 0 0; 0 0 ]
+R = eye(3) + v * sin(theta) + v.^2 * (1-cos(theta));
+end
+
