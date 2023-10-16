@@ -14,15 +14,13 @@ function [theta,v] = ComputeInverseAngleAxis(R)
     % does not satisfy the rotation matrix criteria.
     
     % Check matrix R to see if its size is 3x3
-    if 
-        
+    if size(R) == size(eye(3))      
         % Check matrix R to see if it is orthogonal
-        if 
+        if R*R' == eye(3) %or  
             % Check matrix R to see if it is proper: det(R) = 1
-            
-            if 
+            if det(R) == 1
                 % Compute the angle of rotation
-                
+                theta = acos((trace(R) - 1)/2);
                 % Calculate eigenvalues and eigenvectors of R
                 
                 % Compute the axis of rotation
