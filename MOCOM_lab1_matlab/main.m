@@ -1,4 +1,6 @@
 %% Exercises Modelling Part 1
+clc; clear;
+close all; % closes all the figures
 % Rotation matrices, Equivalent angle-axis representations, Quaternions
 addpath('include') %%DO NOT CHANGE STUFF INSIDE THIS PATH
 
@@ -8,7 +10,14 @@ addpath('include') %%DO NOT CHANGE STUFF INSIDE THIS PATH
 % and returning the orientation matrix.
 % and test it for the following cases:
 
-% 1.1.
+
+%% Test 
+% theta = 0; v = [0,0,0];
+% aRb = ComputeAngleAxis(theta, v);
+% disp('aRb ex 1.1:');disp(aRb);
+% plotRotation(theta,v,aRb);
+
+%% 1.1.
 
 theta = 0; v = [0,0,0];
 aRb = ComputeAngleAxis(theta, v);
@@ -18,27 +27,67 @@ plotRotation(theta,v,aRb);
 
 %% 1.2.
 theta = pi/4; v = [1,0,0];
-aRb = ComputeAngleAxis(theta, v)
+aRb = ComputeAngleAxis(theta, v);
 plotRotation(theta,v,aRb);
-disp('theta ex 1.2:');disp(theta);
-disp('v ex 1.2:');disp(v); 
-% 1.3.
-
-theta = pi/6; v = [0,1,0];
-aRb = ComputeAngleAxis(theta, v)
-plotRotation(theta,v,aRb);
+disp('aRb ex 1.2:');disp(aRb);
 disp('theta ex 1.2:');disp(theta);
 disp('v ex 1.2:');disp(v); 
 
-% 1.4.
+%% 1.3.
+theta = pi; v = [0,1,0];
+aRb = ComputeAngleAxis(theta, v);
+plotRotation(theta,v,aRb);
+disp('aRb ex 1.3:');disp(aRb);
+disp('theta ex 1.3:');disp(theta);
+disp('v ex 1.3:');disp(v); 
 
-% 1.5.
+%% 1.4.
+theta = 3*pi/4; v = [0,0,1];
+aRb = ComputeAngleAxis(theta, v);
+plotRotation(theta,v,aRb);
+disp('aRb ex 1.4:');disp(aRb);
+disp('theta ex 1.4:');disp(theta);
+disp('v ex 1.4:');disp(v);
 
-% 1.6.
 
-% 1.7.
+%% 1.5.
+theta = 2.8; v = [0.3202, 0.5337, 0.7827];
+aRb = ComputeAngleAxis(theta, v);
+plotRotation(theta,v,aRb);
+disp('aRb ex 1.5:');disp(aRb);
+disp('theta ex 1.5:');disp(theta);
+disp('v ex 1.5:');disp(v);
 
-% 1.8.
+
+%% 1.6.
+rho = [0 2*pi/3 0]; %knowing that rho = v * theta
+theta = norm(rho); v = rho/theta;
+aRb = ComputeAngleAxis(theta, v);
+plotRotation(theta,v,aRb);
+disp('aRb ex 1.6:');disp(aRb);
+disp('theta ex 1.6:');disp(theta);
+disp('v ex 1.6:');disp(v);
+
+
+%% 1.7.
+rho = [0.25, -1.3, 0.15]; %knowing that rho = v * theta
+theta = norm(rho); v = rho/theta;
+aRb = ComputeAngleAxis(theta, v);
+plotRotation(theta,v,aRb);
+disp('aRb ex 1.7:');disp(aRb);
+disp('theta ex 1.7:');disp(theta);
+disp('v ex 1.7:');disp(v);
+
+
+%% 1.8.
+rho = [-pi/4, -pi/3 ,pi/6];
+theta = norm(rho); v = rho/theta;
+aRb = ComputeAngleAxis(theta, v);
+plotRotation(theta,v,aRb);
+disp('aRb ex 1.8:');disp(aRb);
+disp('theta ex 1.8:');disp(theta);
+disp('v ex 1.8:');disp(v);
+
 
 %% Exercise 2
 % 2.1. Write the relative rotation matrix aRb
