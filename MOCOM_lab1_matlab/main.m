@@ -126,17 +126,22 @@ disp('v ex 1.8:');disp(v);
     disp('theta ex 2.2:');disp(theta);
     disp('v ex 2.2:');disp(v); 
 
-    % 2.3
+    %% 2.3
 
      wTc = [0.835959 -0.283542 -0.46986 0; 0.271321 0.957764 -0.0952472 -1.23; ...
             0.47703 -0.0478627 0.877583 14; 0 0 0 1];
 
     % Compute the rotation matrix between frame <c> and <b>
-
+    wRc = wTc(1:3, 1:3);
+    cRb = wRb'*wRc;
     % Compute inverse equivalent angle-axis repr. of cRb
     [theta, v] = ComputeInverseAngleAxis(cRb);
     % Plot Results
     plotRotation(theta,v,cRb);
+    disp('theta ex 2.3:');disp(theta);
+    disp('v ex 2.3:');disp(v); 
+    new_R = ComputeAngleAxis(theta,v);
+    plotRotation(theta,v,new_R);
     disp('theta ex 2.3:');disp(theta);
     disp('v ex 2.3:');disp(v); 
 
