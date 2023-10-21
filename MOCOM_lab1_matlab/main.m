@@ -12,10 +12,10 @@ addpath('include') %%DO NOT CHANGE STUFF INSIDE THIS PATH
 
 
 %% Test 
-% theta = 0; v = [0,0,0];
-% aRb = ComputeAngleAxis(theta, v);
-% disp('aRb ex 1.1:');disp(aRb);
-% plotRotation(theta,v,aRb);
+ theta = 0; v = [0,0,0];
+ aRb = ComputeAngleAxis(theta, v);
+ disp('aRb ex 1.1:');disp(aRb);
+ plotRotation(theta,v,aRb);
 
 %% 1.1.
 
@@ -92,16 +92,30 @@ disp('v ex 1.8:');disp(v);
 %% Exercise 2
 % 2.1. Write the relative rotation matrix aRb
 % 2.2. Solve the Inverse Equivalent Angle-Axis Problem for the orientation matrix aRb. 
+
 % 2.3. Repeat the exercises using the wRc instead of wRa (more general example)
 % NB: check the notation used !
 
     % 2.1 
     % Initialize the rotation matrices, using the suggested notation
-        %rotation matrix from <w> to frame <a>
 
+        %rotation matrix from <w> to frame <a>
+           wRa = eye(3);
+           
         %rotation matrix from <w> to <b> (represent 90° around z)
+        alpha = pi/2;
+        rot_z = [cos(alpha) -sin(alpha) 0; ...
+                 sin(alpha) cos(alpha) 0;  ...
+                 0 0 1]; % rotation around z     
+        wRb = eye(3) * rot_z;
+
+
         
     % Compute the rotation matrix between frame <a> and <b>
+
+    aRb = wRa' * wRb;
+
+     %%
 
     % 2.2
     % Compute the inverse equivalent angle-axis repr. of aRb 
@@ -112,14 +126,22 @@ disp('v ex 1.8:');disp(v);
     disp('theta ex 2.2:');disp(theta);
     disp('v ex 2.2:');disp(v); 
 
-    % 2.3
+    %% 2.3
+
+     wTc = [0.835959 -0.283542 -0.46986 0; 0.271321 0.957764 -0.0952472 -1.23; ...
+            0.47703 -0.0478627 0.877583 14; 0 0 0 1];
 
     % Compute the rotation matrix between frame <c> and <b>
-
+    wRc = wTc(1:3, 1:3);
+    cRb = wRb'*wRc;
     % Compute inverse equivalent angle-axis repr. of cRb
     [theta, v] = ComputeInverseAngleAxis(cRb);
     % Plot Results
     plotRotation(theta,v,cRb);
+    disp('theta ex 2.3:');disp(theta);
+    disp('v ex 2.3:');disp(v); 
+    new_R = ComputeAngleAxis(theta,v);
+    plotRotation(theta,v,new_R);
     disp('theta ex 2.3:');disp(theta);
     disp('v ex 2.3:');disp(v); 
 
