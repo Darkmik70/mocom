@@ -162,16 +162,31 @@ disp('v ex 1.8:');disp(v);
 % hint: define angle of rotation in the initialization
 
     % a
-        %rotation matrix from <w> to frame <b> by rotating around z-axes
-        % wRb_z = ... ;
+        %rotation matrix from <w> to frame <b> by rotating around z-axes by
+        %45° represented in radians
+        v=[0,0,1];              
+        theta = pi/4;
+        wRb_z = [cos(theta) -sin(theta) 0;
+                    sin(theta) cos(theta) 0;
+                    0 0 1] ;
         
     % b
-        %rotation matrix from <w> to frame <b> by rotating around y-axes
-        % wRb_y = ... ;
+        %rotation matrix from <w> to frame <b> by rotating around y-axes by
+        %60° represented in radians
+        v=[0,1,0];
+        theta = pi/3;
+        wRb_y = [cos(theta) 0 in(theta);
+                    0 1 0;
+                    -sin(theta) 0 cos(theta)] ;
         
     % c
-        %rotation matrix from <w> to frame <b> by rotating around x-axes
-        % wRb_x = ... ;
+        %rotation matrix from <w> to frame <b> by rotating around x-axes by
+        %-30° represented in radians
+        v=[1,0,0];  
+        theta = -pi/6;
+        wRb_x = [cos(theta) -sin(theta) 0;
+                    sin(theta) cos(theta) 0;
+                    0 0 1] ;
          disp('es 3.1:');disp(wRb_z);disp(wRb_y);disp(wRb_x);
     
 % 3.2
@@ -195,7 +210,7 @@ disp('v ex 1.8:');disp(v);
         disp('v ex 3.2.c:');disp(v); 
 % 3.3 
     % Compute the rotation matrix corresponding to the z-y-x representation;
-    
+    Rzyx = wRb_z* wRb_y* wRb_x;
     % Compute equivalent angle-axis repr.
     [theta, v] = ComputeInverseAngleAxis(Rxyz);
     % Plot Results
@@ -206,7 +221,10 @@ disp('v ex 1.8:');disp(v);
     
 % 3.4
     % Compute the rotation matrix corresponding to the z-x-z representation;
-   
+
+    Rzxz = wRb_z* wRb_x* wRb_z;        %still waiting for confimration on 
+    % whether we can represent like this
+
 	% Compute equivalent angle-axis repr.
     [theta, v] = ComputeInverseAngleAxis(Rzxz);
     % Plot Results
@@ -223,14 +241,18 @@ disp('v ex 1.8:');disp(v);
 % https://it.mathworks.com/help/nav/referencelist.html?type=function&category=coordinate-system-transformations&s_tid=CRUX_topnav
 % CHECK IF THE RESULT IS THE SAME 
     %%%%%%%%%%%%
-
+    q0 = 0.1647;
+    q1 = 0.315831;
+    q2 = 0.52639;
+    q3 = 0.77204;
     %%%%%%%%%%%%%
     % Compute the rotation matrix associated with the given quaternion
     rotMatrix = quatToRot(q0,q1,q2,q3);
     disp('rot matrix es 4.1');disp(rotMatrix)
 
     % solve using matlab functions quaternion(), rotmat(),
-    % rotMatrix = ...
+    quat = [q0 q1 q2 q3];
+    rotMatrix = quat2rotm(quat);
 
     % Evaluate angle-axis representation and display rotations - check if the
     % same results as before
