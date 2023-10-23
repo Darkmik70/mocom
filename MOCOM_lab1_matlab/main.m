@@ -175,7 +175,7 @@ disp('v ex 1.8:');disp(v);
         %60° represented in radians
         v=[0,1,0];
         theta = pi/3;
-        wRb_y = [cos(theta) 0 in(theta);
+        wRb_y = [cos(theta) 0 sin(theta);
                     0 1 0;
                     -sin(theta) 0 cos(theta)] ;
         
@@ -189,7 +189,7 @@ disp('v ex 1.8:');disp(v);
                     0 0 1] ;
          disp('es 3.1:');disp(wRb_z);disp(wRb_y);disp(wRb_x);
     
-% 3.2
+%% 3.2
     % a
         [theta, v] = ComputeInverseAngleAxis(wRb_z);
         % Plot Results
