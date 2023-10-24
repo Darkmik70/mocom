@@ -241,22 +241,26 @@ disp('v ex 3.4:');disp(v);
 % https://it.mathworks.com/help/nav/referencelist.html?type=function&category=coordinate-system-transformations&s_tid=CRUX_topnav
 % CHECK IF THE RESULT IS THE SAME
 
+% 4.1 Compute the rotation matrix associated with the given quaternion
 q0 = 0.1647;
 q1 = 0.315831;
 q2 = 0.52639;
 q3 = 0.77204;
-
-% Compute the rotation matrix associated with the given quaternion
 rotMatrix = quatToRot(q0,q1,q2,q3);
+
+% Evaluate angle-axis representation and display rotations
+[theta, v] = ComputeInverseAngleAxis(rotMatrix);
+% Plot Results
+plotRotation(theta,v,rotMatrix);
 disp('rot matrix es 4.1');disp(rotMatrix)
 
-% solve using matlab functions quaternion(), rotmat(),
+%4.3. solve using matlab functions quaternion(), rotmat(),
 quat = [q0 q1 q2 q3];
 rotMatrix_matlab = quat2rotm(quat);
 
 % Evaluate angle-axis representation and display rotations - check if the
 % same results as before
-[theta, v] = ComputeInverseAngleAxis(rotMatrix);
+[theta, v] = ComputeInverseAngleAxis(rotMatrix_matlab);
 % Plot Results
-plotRotation(theta,v,rotMatrix);
-disp('rot matrix es 4.3');disp(rotMatrix)
+plotRotation(theta,v,rotMatrix_matlab);
+disp('rot matrix calculated es 4.3');disp(rotMatrix_matlab)

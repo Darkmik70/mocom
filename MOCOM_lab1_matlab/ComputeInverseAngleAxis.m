@@ -16,7 +16,7 @@ function [theta,v] = ComputeInverseAngleAxis(R)
     % Check matrix R to see if its size is 3x3
     if size(R) == size(eye(3))      
         % Check matrix R to see if it is orthogonal
-        if  isequal(R*R' == R'*R, R*R' == eye(3))%R*R' == eye(3) %or  
+        if  isequal(int8(R*R'), eye(3))%R*R' == eye(3) %or  
             % Check matrix R to see if it is proper: det(R) = 1
             if int8(det(R)) == 1 %isequal(int8(det(R)), 1)
                 % Compute the angle of rotation
