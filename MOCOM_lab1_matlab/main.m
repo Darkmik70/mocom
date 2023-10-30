@@ -199,7 +199,7 @@ disp('v ex 3.2.a:');disp(v);
 % b
 [theta, v] = ComputeInverseAngleAxis(wRb_y);
 % Plot Results
-plotRotation(theta,v,wRb_y);
+ plotRotation(theta,v,wRb_y);
 disp('theta ex 3.2.b:');disp(theta);
 disp('v ex 3.2.b:');disp(v);
 % c
@@ -212,9 +212,9 @@ disp('v ex 3.2.c:');disp(v);
 % Compute the rotation matrix corresponding to the z-y-x representation;
 Rzyx = wRb_z* wRb_y* wRb_x;
 % Compute equivalent angle-axis repr.
-[theta, v] = ComputeInverseAngleAxis(Rxyz);
+[theta, v] = ComputeInverseAngleAxis(Rzyx);
 % Plot Results
-plotRotation(theta,v,Rxyz);
+plotRotation(theta,v,Rzyx);
 disp('theta ex 3.3:');disp(theta);
 disp('v ex 3.3:');disp(v);
 
@@ -227,7 +227,7 @@ Rzxz = wRb_z* wRb_x* wRb_z;   %still waiting for confimration on
 % Compute equivalent angle-axis repr.
 [theta, v] = ComputeInverseAngleAxis(Rzxz);
 % Plot Results
-plotRotation(theta,v,Rzyz);
+plotRotation(theta,v,Rzxz);
 disp('theta ex 3.4:');disp(theta);
 disp('v ex 3.4:');disp(v);
 
@@ -252,7 +252,7 @@ rotMatrix = quatToRot(q0,q1,q2,q3);
 [theta, v] = ComputeInverseAngleAxis(rotMatrix);
 % Plot Results
 plotRotation(theta,v,rotMatrix);
-disp('rot matrix es 4.1');disp(rotMatrix)
+disp('rot matrix ex 4.1');disp(rotMatrix)
 
 %4.3. solve using matlab functions quaternion(), rotmat(),
 quat = [q0 q1 q2 q3];
@@ -263,4 +263,4 @@ rotMatrix_matlab = quat2rotm(quat);
 [theta, v] = ComputeInverseAngleAxis(rotMatrix_matlab);
 % Plot Results
 plotRotation(theta,v,rotMatrix_matlab);
-disp('rot matrix calculated es 4.3');disp(rotMatrix_matlab)
+disp('matrix from builtin functions ex 4.3');disp(rotMatrix_matlab)
