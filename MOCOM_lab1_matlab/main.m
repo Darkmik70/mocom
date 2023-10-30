@@ -34,7 +34,7 @@ disp('theta ex 1.2:');disp(theta);
 disp('v ex 1.2:');disp(v);
 
 %% 1.3.
-theta = pi; v = [0,1,0];
+theta = pi/6; v = [0,1,0];
 aRb = ComputeAngleAxis(theta, v);
 plotRotation(theta,v,aRb);
 disp('aRb ex 1.3:');disp(aRb);
