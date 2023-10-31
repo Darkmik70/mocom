@@ -184,8 +184,7 @@ wRb_y = [cos(theta) 0 sin(theta);
 %-30° represented in radians
 v=[1,0,0];
 theta = -pi/6;
-wRb_x = [cos(theta) -sin(theta) 0;
-    sin(theta) cos(theta) 0;
+wRb_x = [1 0 0; 0 cos(theta) -sin(theta);0    sin(theta) cos(theta);
     0 0 1] ;
 disp('es 3.1:');disp(wRb_z);disp(wRb_y);disp(wRb_x);
 
