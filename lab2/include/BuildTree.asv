@@ -45,16 +45,12 @@ iTj(4,1,2) = 0; iTj(4,2,2) = 0; iTj(4,3,2) = 0; iTj(4,4,2) = 0;
 
 
 % link 4
-% from 3 to 4 we need to perform:
-% - rotation over y
-% - translation over x
-theta_4 = -pi/2;
-trans_x = 431.5 - 326.5;
+% from 3 to 4 we need to per
 
-iTj(1,1,4) = cos(theta_4); iTj(1,2,4) = 0; iTj(1,3,4) = sin(theta_4);  iTj(1,4,4) = trans_x;
-iTj(2,1,4) = 0; iTj(2,2,4) = 1; iTj(2,3,4) = 0; iTj(2,4,4) = 0;
-iTj(3,1,4) = -sin(theta_4); iTj(3,2,4) = 0; iTj(3,3,4) = cos(theta_4);  iTj(3,4,4) = 0;
-iTj(4,1,4) = 0; iTj(4,2,4) = 0; iTj(4,3,4) = 0;  iTj(4,4,4) = 0;
+iTj(1,1,7) = 0; iTj(1,2,7) = 0; iTj(1,3,7) = 0;  iTj(1,4,7) = 0;
+iTj(2,1,7) = 0; iTj(2,2,7) = 0; iTj(2,3,7) = 0; iTj(2,4,7) = 0;
+iTj(3,1,7) = 0; iTj(3,2,7) = 0; iTj(3,3,7) = 0;  iTj(3,4,7) = 0;
+iTj(4,1,7) = 0; iTj(4,2,7) = 0; iTj(4,3,7) = 0;  iTj(4,4,7) = 0;
 
 % link 3
 
