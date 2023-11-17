@@ -16,19 +16,21 @@ end
 %% 2.
 
 % Useful initizializations
-numberOfLinks = 7;                    % number of manipulator's links.
+numberOfLinks = size(geom_model(),3);                                               % number of manipulator's links.
 % linkType :0 for revolute, 1 for prismatic
-linkType = zeros(7,1);                    % boolean that specifies two possible link types: Rotational, Prismatic.
-bri= zeros(3,numberOfLinks);        % Basic vector of i-th link w.r.t. base
-bTi = zeros(4,4,numberOfLinks);     % Trasformation matrix i-th link w.r.t. base
+linkType = zeros(numberOfLinks,1);                                             % boolean that specifies two possible link types: Rotational, Prismatic.
+bri= zeros(3,numberOfLinks);                                                    % Basic vector of i-th link w.r.t. base
+bTi = zeros(4,4,numberOfLinks);                                              % Trasformation matrix i-th link w.r.t. base
 
-iTj = zeros(4,4,1);
 % Initial joint configuration 
 q = [0,0,0,0,0,0,0];
 
-% Q1.1 and Q1.2
-biTei = GetDirectGeometry();
 
+
+
+% Q1.1 and Q1.2
+iTj_q = GetDirectGeometry(q, geom_model, linkType);
+%%
 %Q1.3
 for i =1:numberOfLinks
     bTi(:,:,i)= GetTransformationWrtBase();

@@ -1,4 +1,4 @@
-function [iTj_q] = GetDirectGeometry(q, iTj, JointType)
+function [iTj_q] = GetDirectGeometry(q, iTj, linkType)
 %%% GetDirectGeometryFunction
 
 % Inputs: 
@@ -12,9 +12,8 @@ function [iTj_q] = GetDirectGeometry(q, iTj, JointType)
 % iTj_q vector of matrices containing the transformation matrices from joint i to joint j for the input q. 
 % The size of iTj is equal to (4,4,numberOfLinks)
 
-
-for i = 1:1:numberOfLinks
-    %iTj_q(:,:,i) = DirectGeometry(q(i),biTri(:,:,i), linkType(i));
+for i = 1:1:size(linkType)
+    iTj_q(:,:,i) = DirectGeometry(q(i), iTj(:,:,i), linkType(i));
 end
 
 end
