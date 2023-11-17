@@ -4,7 +4,7 @@ function iTj_q = DirectGeometry(qi, iTj, linkType)
 % qi : current joint position;
 % iTj is the constant transformation between the base of the link <i>
 % and its follower frame <j>; 
-% jointType :0 for revolute, 1 for prismatic
+% linkType :0 for revolute, 1 for prismatic
 
 % output :
 % iTj_q : transformation between the base of the joint <i> and its follower frame taking 

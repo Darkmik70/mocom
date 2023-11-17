@@ -1,10 +1,6 @@
 %% Modelling and Control of Manipulator assignment 2: Manipulator Geometry and Direct kinematic
-clc;
-clear;
-close all;
+clc; clear; close all;
 addpath('include');
-
-
 %% 1.
 % You will need to define all the model matrices, and fill the so called iTj matrices inside BuildTree() function 
 % Be careful to define the z-axis coinciding with the joint rotation axis,
@@ -20,8 +16,9 @@ end
 %% 2.
 
 % Useful initizializations
-numberOfLinks =                     % number of manipulator's links.
-linkType =                          % boolean that specifies two possible link types: Rotational, Prismatic.
+numberOfLinks = 7;                    % number of manipulator's links.
+% linkType :0 for revolute, 1 for prismatic
+linkType = zeros(7,1);                    % boolean that specifies two possible link types: Rotational, Prismatic.
 bri= zeros(3,numberOfLinks);        % Basic vector of i-th link w.r.t. base
 bTi = zeros(4,4,numberOfLinks);     % Trasformation matrix i-th link w.r.t. base
 
