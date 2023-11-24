@@ -14,7 +14,7 @@ if linkType == 0 % rotational
     % in case of rotational joint we are always rotating about z-axis
     Rot(1,1) = cos(qi); Rot(1,2) = -sin(qi); Rot(1,3) = 0; Rot(1,4) = 0;
     Rot(2,1) = sin(qi); Rot(2,2) = cos(qi); Rot(2,3) = 0; Rot(2,4) = 0;
-    Rot(3,1) = 0; Rot(3,2) = 0; Rot(3,3) = 0; Rot(3,4) = 0;
+    Rot(3,1) = 0; Rot(3,2) = 0; Rot(3,3) = 1; Rot(3,4) = 0;
     Rot(4,1) = 0; Rot(4,2) = 0; Rot(4,3) = 0; Rot(4,4) = 1;
 
     iTj_q = iTj * Rot; 
