@@ -62,44 +62,23 @@ iTj = GetFrameWrtFrame(geom_model, a, b);
 % 1
 q_i_1 = [0, 0, 0, 0, 0, 0, 0];
 q_f_1 = [pi/4, pi/2, -pi/8, -pi/2, pi/4, 2/(3*pi), 0];
+fig1 = PlotConfiguration(q_i_1, q_f_1, geom_model,linkType);
 
 % 2
 q_i_2 = [0, pi/2, 0, -pi/2, 0, 0, 0];
 q_f_2 = [0, 0, 0, 0, 0, 0, 0];
+fig2 = PlotConfiguration(q_i_2, q_f_2, geom_model,linkType);
 
 % 3
 q_i_3 = [1.3, 0.1, 0.1, 1, 0.2, 0.3, 1.3]; % Those are radians, boys
 q_f_3 = [2, 2, 2, 2, 2, 2, 2];
+fig2 = PlotConfiguration(q_i_2, q_f_2, geom_model,linkType);
+
 
 %% 
 % Hint: use plot3() and line() matlab functions.
 % Initial joint configuration 
 % 1
-
-figure
-view(3);
-grid on; hold on;
-axis equal; grid on; hold on;
-xlabel('X'); ylabel('Y'); zlabel('Z');
-xlim([-450 200]);ylim([-450 200]);zlim([0 450]);
-view(3);
-
-
-% Get Coressponding vectors 
-for i = 1:numberOfLinks
-    bri(:,i) = GetBasicVectorWrtBase(geom_model, i);
-end
-
-plot3(0,0,0,'k.', 'MarkerSize',30)
-
-% Plot positions 
-for i = 1:numberOfLinks
-    bri(:,i) = GetBasicVectorWrtBase(geom_model, i);
-    plot3(bri(1,i),bri(2,i),bri(3,i), 'k.', 'MarkerSize', 15)
-end
-
-base = [0,0,0; 0, 0, 175]';
-line(base(1,:),base(2,:),base(3,:),'LineWidth',3,'Color','red');
 
 
 
