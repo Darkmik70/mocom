@@ -10,6 +10,6 @@ function r = GetBasicVectorWrtBase(biTei, linkNumber)
 bTi = GetTransformationWrtBase(biTei, linkNumber);
 
 % Extract the first three elements from last column
-r = bTi(1:3,4)
+r = bTi(1:3,4);
 end
 

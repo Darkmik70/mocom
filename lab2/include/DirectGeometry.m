@@ -20,7 +20,7 @@ if linkType == 0 % rotational
     iTj_q = iTj * Rot; 
  
 elseif linkType == 1 % prismatic
-    % we also assume here that translations got by z-axis
+    % we also assume here that translations go along z-axis
     Trans(1,1) = 0; Trans(1,2) = 0; Trans(1,3) = 0; Trans(1,4) = 0;
     Trans(2,1) = 0; Trans(2,2) = 0; Trans(2,3) = 0; Trans(2,4) = 0;
     Trans(3,1) = 0; Trans(3,2) = 0; Trans(3,3) = 0; Trans(3,4) = qi;

@@ -20,37 +20,45 @@ title("Plot Configuration q_i"); view(3);
 grid on; hold on; axis equal; grid on; hold on;
 xlabel('X'); ylabel('Y'); zlabel('Z');
 xlim([-450 850]); ylim([-550 850]); zlim([-100 850]);
+% Create handle for a sample joint and line for legend
+
 
 
 for i = 1:numberOfSteps
+    if i == numberOfSteps/2
+        pause;
+    end
+    % Clear screen from previous plot;
     cla;
-    %-------------------MOVE----------------------%
-    % we need to calculate fk for qsteps(1,:)
-
+    
+    % Calculate FK 
     conf = GetDirectGeometry(qSteps(i,:), geom_model, linkType);
 
-    % We assume that size of Qi is equal to Qf TODO add some test
+    % We assume that size of Qi is equal to Qf
     numberOfLinks = size(conf,3);
+   
     % allocate basic vector
     bri = zeros(3,numberOfLinks);
-    % Get Coressponding vectors
-    for i = 1:numberOfLinks
-        bri(:,i) = GetBasicVectorWrtBase(conf, i);
-    end
-
+    
+    % Position of base
     plot3(0,0,0,'k.', 'MarkerSize',30)
 
-    % Plot positions
+    % Plot joint positions 
     for j = 1:numberOfLinks
         bri(:,j) = GetBasicVectorWrtBase(conf, j);
         % Plot joints as points
         plot3(bri(1,j),bri(2,j),bri(3,j), 'k.', 'MarkerSize', 15)
     end
 
-    % plot connection from base to link 1
-    base = [0,0,0; 0, 0, bri(3,1)]'; %%kinda softcoded
+    % plot links %
+    % Get the link from base to link 1 
+    base = [0,0,0; 0, 0, bri(3,1)]'; 
     line(base(1,:),base(2,:),base(3,:),'LineWidth',2.5,'Color', "#4DBEEE");
     % plot rest of the links
-    line(bri(1,:),bri(2,:),bri(3,:),'LineWidth',2.5,'Color', "#4DBEEE");
+    line(bri(1,:),bri(2,:),bri(3,:),'LineWidth',2.5,'Color', "#4DBEEE")
+    
+
+    
     drawnow;
+    pause(0.01);
 end
