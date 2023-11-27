@@ -23,7 +23,7 @@ iTj(4,1,1) = 0; iTj(4,2,1) = 0; iTj(4,3,1) = 0; iTj(4,4,1) = 1;
 % transformation from <1> to <2> 
 % Translation dz_2
 % rotation over x of -pi/2
-dz_2 = 213 - (175 - 60);
+dz_2 = 175 + 98; % 213 - (175 - 60);
 
 iTj(1,1,2) = 1; iTj(1,2,2) = 0; iTj(1,3,2) = 0; iTj(1,4,2) = 0;
 iTj(2,1,2) = 0; iTj(2,2,2) = 0; iTj(2,3,2) = 1; iTj(2,4,2) = 0;

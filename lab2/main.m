@@ -50,7 +50,7 @@ end
 
 % Get Coressponding vectors 
 for i = 1:numberOfLinks
-    bri(:,i) = GetBasicVectorWrtBase(geom_model, i);
+    bri(:,i) = GetBasicVectorWrtBase(geom_model, i)
 end
 
 % Get Transformation for any two links
@@ -72,9 +72,36 @@ q_i_3 = [1.3, 0.1, 0.1, 1, 0.2, 0.3, 1.3]; % Those are radians, boys
 q_f_3 = [2, 2, 2, 2, 2, 2, 2];
 
 %% 
-% Hint: use plot3() and line() matlab functions. 
-qi = q;
-qf = [];
+% Hint: use plot3() and line() matlab functions.
+% Initial joint configuration 
+% 1
+
+figure
+view(3);
+grid on; hold on;
+axis equal; grid on; hold on;
+xlabel('X'); ylabel('Y'); zlabel('Z');
+xlim([-450 200]);ylim([-450 200]);zlim([0 450]);
+view(3);
+
+
+% Get Coressponding vectors 
+for i = 1:numberOfLinks
+    bri(:,i) = GetBasicVectorWrtBase(geom_model, i);
+end
+
+plot3(0,0,0,'k.', 'MarkerSize',30)
+
+% Plot positions 
+for i = 1:numberOfLinks
+    bri(:,i) = GetBasicVectorWrtBase(geom_model, i);
+    plot3(bri(1,i),bri(2,i),bri(3,i), 'k.', 'MarkerSize', 15)
+end
+
+base = [0,0,0; 0, 0, 175]';
+line(base(1,:),base(2,:),base(3,:),'LineWidth',3,'Color','red');
+
+
 
 
 %%

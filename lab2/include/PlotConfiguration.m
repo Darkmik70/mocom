@@ -12,19 +12,25 @@ function [] = PlotConfiguration(biTei, linkType, qi, qf)
 numberOfSteps = 100; % steps'number to pass from qi to qf
 
 
-
-
-
-
-
 % Figure initialization 
 figure
 title("Configureation from Qi to Qf");
-ax = axes('Parent', gcf); hold(ax, 'on');
-axis equal; grid on;
+axis equal; grid on; hold on;
 xlabel('X'); ylabel('Y'); zlabel('Z');
 view(3);
 
+
+for i = 1:numberOfSteps
+
+
+    % Get Coressponding vectors
+    for i = 1:numberOfLinks
+        bri(:,i) = GetBasicVectorWrtBase(geom_model, i);
+    end
+
+    plot3(bri);
+
+end
 
 
 
