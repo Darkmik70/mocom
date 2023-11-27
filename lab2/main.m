@@ -62,30 +62,33 @@ iTj = GetFrameWrtFrame(geom_model, a, b);
 % 1
 q_i_1 = [0, 0, 0, 0, 0, 0, 0];
 q_f_1 = [pi/4, pi/2, -pi/8, -pi/2, pi/4, 2/(3*pi), 0];
-fig1 = PlotConfiguration(q_i_1, q_f_1, geom_model,linkType);
+% fig1 = PlotConfiguration(q_i_1, q_f_1, geom_model,linkType);
 
 % 2
 q_i_2 = [0, pi/2, 0, -pi/2, 0, 0, 0];
 q_f_2 = [0, 0, 0, 0, 0, 0, 0];
-fig2 = PlotConfiguration(q_i_2, q_f_2, geom_model,linkType);
+% fig2 = PlotConfiguration(q_i_2, q_f_2, geom_model,linkType);
 
 % 3
 q_i_3 = [1.3, 0.1, 0.1, 1, 0.2, 0.3, 1.3]; % Those are radians, boys
 q_f_3 = [2, 2, 2, 2, 2, 2, 2];
-fig2 = PlotConfiguration(q_i_2, q_f_2, geom_model,linkType);
+% fig2 = PlotConfiguration(q_i_2, q_f_2, geom_model,linkType);
+
+%% Q1.5 Conf 1 
+q_i_1 = [0, 0, 0, 0, 0, 0, 0];
+q_f_1 = [pi/4, pi/2, -pi/8, -pi/2, pi/4, 2/(3*pi), 0];
+PlotAnimate(q_i_1, q_f_1,geom_model,linkType)
+
+%% Q1.5 Conf 1 
+q_i_2 = [0, pi/2, 0, -pi/2, 0, 0, 0];
+q_f_2 = [0, 0, 0, 0, 0, 0, 0];
+
+PlotAnimate(q_i_2, q_f_2,geom_model,linkType)
+
+%% Q1.5 Conf 1 
+q_i_3 = [1.3, 0.1, 0.1, 1, 0.2, 0.3, 1.3]; % Those are radians, boys
+q_f_3 = [2, 2, 2, 2, 2, 2, 2];
+
+PlotAnimate(q_i_3, q_f_3,geom_model,linkType)
 
 
-%% 
-% Hint: use plot3() and line() matlab functions.
-% Initial joint configuration 
-% 1
-
-
-
-
-%%
-
-for i = 1:numberOfSteps
-%-------------------MOVE----------------------%
-    
-end
