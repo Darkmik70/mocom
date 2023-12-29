@@ -1,4 +1,4 @@
-function [biTie] = GetDirectGeometry(q, iTj, linkType)
+function [biTei] = GetDirectGeometry(q, iTj, linkType)
 %%% GetDirectGeometryFunction
 
 % Inputs: 
@@ -13,8 +13,13 @@ function [biTie] = GetDirectGeometry(q, iTj, linkType)
 % The size of iTj is equal to (4,4,numberOfLinks)
 
 
-for i = 1:1:numberOfLinks
-    %biTie(:,:,i) = DirectGeometry(q(i),iTj(:,:,i), linkType(i));
+% Allocate matrix
+num_of_links = size(linkType, 1);
+biTei = zeros(4,4,num_of_links);
+
+for i = 1:1:num_of_links
+    biTei(:,:,i) = DirectGeometry(q(i), iTj(:,:,i), linkType(i));
 end
+
 
 end
