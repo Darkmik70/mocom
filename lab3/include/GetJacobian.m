@@ -1,4 +1,4 @@
-function J = GetJacobian(biTei, bTe, linkType)
+function J = GetJacobian(biTei, linkType)
 %% GetJacobian function
 % Function returning the end effector jacobian for a manipulator which current
 % configuration is described by bTei.
@@ -12,39 +12,44 @@ function J = GetJacobian(biTei, bTe, linkType)
 %
 % Output:
 % - J: end-effector jacobian matrix
+numberOfLinks = size(linkType,1);
 
-% Size of Jacobian 6 x n
-n = size(linkType, 1);
-% Allocate the Jacobian
-J = zeros(6, n);
 
-for i = 1 : n
-    % Transformatrion matrix for the ith-joint w.r.t.
-    % the base of the manipulator
-    bTi = GetTransformationWrtBase(biTei, i);
+% get the vector of matrices of Transformation of every joint wrt base
+for i = 1 : numberOfLinks
+    bTi_q(:,:,i) = GetTransformationWrtBase(biTei, i);
+end 
 
-    %% Fill the Jacobian columns
-    % Allocate the i-th column of the Jacobian
-    h = zeros(6, 1); %#ok<PREALL>
+% Extract the transformation matrix, bTe, of the end-effector w.r.t. the
+% base from bTi_q
+bTe = bTi_q(:, :, numberOfLinks);
 
-    % Unit vector that indicates the direction of the i-th joint's axis,
-    ki = bTi(1:3, 3);
+% Extract vector bre linking the base to the end-effector from bTe
+bre = bTe(1:3,4);
 
-    % Compute the distance vector between the ee and i-th joint
-    r_e0= bTe(1:3, 4);      % pos of ee w.r.t. the base
-    r_i0= bTi(1:3, 4);      % pos of <i> w.r.t. the base
-    r_ei= r_e0 - r_i0;      % dist between ee and <i>
+% Define the 3xn Jacobian matrix
+J = zeros(6, numberOfLinks);
 
-    if(linkType == 0)
-        % revolute joint
-        h = [ki ; cross(ki, r_ei)];
-    elseif (linkType == 1)
-        % prismatic joint
-        h = [0 ; 0 ; 0 ; ki];
-    else
-        error('Unrecognized link type.'); % should never reach
-    end
+% For every transformation in bTi_q, we fill one collumn
+for i = 1:numberOfLinks
+    
+    % Extract the transformation matrix, bTi, of link <i> w.r.t. the base
+    bTi = bTi_q(:,:,i);
 
-    % Fill the Jacobian Collumn
+    % Extract the unit vector in the z-direction, bKi, from the rotational component
+    % of each transformation bTi and assign it to the angular component of the Jacobian
+    Jw = bTi(1:3,3);
+    
+    % Compute the cross product of bKi and bri and assign it to the linear
+    % component of the Jacobian
+    ire = bre - bTi(1:3,4);
+    Jv = cross(bTi(1:3,3),ire);
+
+    % Change unit from mm to m
+    Jv = Jv * 0.001;
+
+    h = [Jw; Jv];
     J(:,i) = h;
+end
+
 end

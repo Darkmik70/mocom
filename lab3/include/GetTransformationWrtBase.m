@@ -9,7 +9,7 @@ function [bTi] = GetTransformationWrtBase(biTei, linkNumber)
 % the configuration identified by biTei.
 
 % Allocate memory for Transformation matrix
-bTi = eye(4);
+bTi = eye(4,4);
 
 % Calculate transformation from base to linkNumber
 for i = 1 : linkNumber
