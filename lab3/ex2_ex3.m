@@ -1,4 +1,4 @@
-clc; clear;
+clc; clear; close all;
 addpath('include')
 model = load("panda.mat"); % don't worry about eventual warnings!
 %% Modelling and Control of Manipulator assignment 3 - Exercise 2 and 3: Inverse Kinematic Control
@@ -29,7 +29,7 @@ bTe = getTransform(model.franka,[q_init',0,0],'panda_link7');%DO NOT EDIT
 % bTt = ...;
 
 %Goal definition 
-bOg = [0.55, -0.3, 0.2]';               %[m] % Goal position
+bOge = [0.55, -0.3, 0.2]';               %[m] % Goal position
 bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
 
 %%%
@@ -42,9 +42,12 @@ if tool == true
    %bTg = ...; % if controlling the tool frame
 else
     % Just the goal frame
-    bTg(1:3,4) = bOg; %if controlling the ee frame
+    bTg(1:3,4) = bOge; %if controlling the ee frame
     bTg(1:3,1:3) = bRg;
+    bTg(4,4) = 1;
 end
+
+bTg
 
 % Control Proportional Gain 
 angular_gain = 0.2;
@@ -60,6 +63,7 @@ q = q_init;
 
 %% Simulation Loop
 for i = t
+    clf;
     %% Cartesian error to reach the goal
     if tool == true %compute the error between the tool frame and goal frame
         
@@ -81,7 +85,8 @@ for i = t
         bJe = tmp(1:6,1:7); %DO NOT EDIT
         
         [lin_err,ang_err] = ComputeError(bTe,bTg);
-        
+        lin_err
+        ang_err
         err = [ang_err; lin_err]
     end
     
@@ -94,11 +99,10 @@ for i = t
    
     %% Compute desired joint velocities 
 
-    q_dot = pinv(bJe) * x_dot;
+    q_dot = pinv(bJe) * x_dot
     
     %% Simulate the robot - implement the function KinematicSimulation()
     q = KinematicSimulation(q(1:7), q_dot,ts, qmin, qmax);
-    
     % DO NOT EDIT - plot the robot moving
     %switch visuals to off for seeing only the frames
     show(model.franka,[q',0,0],'visuals','on');
@@ -111,7 +115,7 @@ for i = t
         plot3(bTe(1,4),bTe(2,4),bTe(3,4),'go','LineWidth',15);
         plot3(bOge(1),bOge(2),bOge(3),'ro','LineWidth',5);
     end
-    drawnow
+    drawnow    
     if(norm(x_dot) < 0.001)
         disp('REACHED THE REQUESTED GOAL POSITION')
         break

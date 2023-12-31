@@ -12,8 +12,19 @@ function [q] = KinematicSimulation(q, q_dot, ts, q_min, q_max)
 % - q new joint configuration
 
 
-    % Updating q
+% Updating q
+q = q + q_dot * ts;
 
-    % Saturating the joint velocities 
+% Saturating the joint velocities 
+for i = 1 : 7
+
+    if q(i) < q_min(i)
+        q(i) = q_min(i);
+    
+    elseif q(i) > q_max(i)
+        q(i) = q_max(i);
+    end
+
+end
 
 end
