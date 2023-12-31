@@ -20,26 +20,42 @@ qmax = [2.8973; 1.7628; 2.8973; -0.0698; 2.8973; 3.7525; 2.8973];
 % configuration of the manipulator
 bTe = getTransform(model.franka,[q_init',0,0],'panda_link7');%DO NOT EDIT 
 
+%% CHOOSE TASK
+tool = true;
+
+%% Tool frame definition
+ 
+  eOt = [0, 0, 21.04]' * 0.01; % given in cm, thats why 0.01 % Orientation t wrt e
+  phi = deg2rad(-44.98);
+  eRt = [cos(phi), -sin(phi), 0; sin(phi), cos(phi), 0; 0, 0, 1];             
+  eTt(1:3, 1:3) = eRt;
+  eTt(1:3, 4) = eOt;
+  eTt(4,4) = 1;
+
+%% Goal definition 
+if tool == true
+    % Ex 3
+    bOgt = [0.55, -0.3, 0.2]';               %[m] % Goal position
+    bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
+
+else
+    % Ex 2 
+    bOge = [0.55, -0.3, 0.2]';               %[m] % Goal position
+    bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
+
+end
 
 
-% Tool frame definition
-% eOt = ...;            % Orientation t wrt e
-% eRt = ...;             
-% eTt = ...;
-% bTt = ...;
 
-%Goal definition 
-bOge = [0.55, -0.3, 0.2]';               %[m] % Goal position
-bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
-
-%%%
-tool = false; % change to true for using the tool
-%%%
-
-% Switch between the two cases (with and without the tool frame)
+%% Switch between the two cases (with and without the tool frame)
 bTg = zeros(4,4);   % Allocate bTg
 if tool == true
+    bTg(1:3,4) = bOgt;
+    bTg(1:3,1:3) = bRg;
+    bTg(4,4) = 1;
+
    %bTg = ...; % if controlling the tool frame
+
 else
     % Just the goal frame
     bTg(1:3,4) = bOge; %if controlling the ee frame
@@ -47,7 +63,6 @@ else
     bTg(4,4) = 1;
 end
 
-bTg
 
 % Control Proportional Gain 
 angular_gain = 0.2;
@@ -72,10 +87,21 @@ for i = t
         tmp = geometricJacobian(model.franka,[q',0,0],'panda_link7'); %DO NOT EDIT
         bJe = tmp(1:6,1:7); %DO NOT EDIT
 
+        bTt = bTe * eTt;
 
-        % bJt = ... 
-        % lin_err = ...
-        % ang_err = ...
+        
+        % Rigid body Jacobian
+        r = [0 -bTt(3,4), bTt(2,4);
+             bTt(3,4) 0 -bTt(1,4);
+             -bTt(2,4), bTt(1,4), 0];
+        S = [eye(3), zeros(3); r, eye(3)];
+        bJt = S * bJe;
+        
+        [lin_err,ang_err] = ComputeError(bTt,bTg);
+        lin_err;
+        ang_err;
+        err = [ang_err; lin_err];
+
         
     else % compute the error between the e-e frame and goal frame
         % Computing transformation matrix from base to end effector 
@@ -85,8 +111,8 @@ for i = t
         bJe = tmp(1:6,1:7); %DO NOT EDIT
         
         [lin_err,ang_err] = ComputeError(bTe,bTg);
-        lin_err
-        ang_err
+        lin_err;
+        ang_err;
         err = [ang_err; lin_err]
     end
     
@@ -99,8 +125,11 @@ for i = t
    
     %% Compute desired joint velocities 
 
-    q_dot = pinv(bJe) * x_dot
-    
+    if tool == true
+       q_dot = pinv(bJt) * x_dot;
+    else
+        q_dot = pinv(bJe) * x_dot;
+    end
     %% Simulate the robot - implement the function KinematicSimulation()
     q = KinematicSimulation(q(1:7), q_dot,ts, qmin, qmax);
     % DO NOT EDIT - plot the robot moving
