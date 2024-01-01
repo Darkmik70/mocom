@@ -36,11 +36,14 @@ tool = true;
 if tool == true
     % Ex 3
     bOgt = [0.55, -0.3, 0.2]';               %[m] % Goal position
-    bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
+
+    bTt = bTe * eTt;                       % Base to Tool frame
+    bRg = bTt(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axisof the robot tool frame initial configuration
 
 else
     % Ex 2 
     bOge = [0.55, -0.3, 0.2]';               %[m] % Goal position
+
     bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
 
 end
