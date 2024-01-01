@@ -24,7 +24,6 @@ bTe = getTransform(model.franka,[q_init',0,0],'panda_link7');%DO NOT EDIT
 tool = true;
 
 %% Tool frame definition
- 
   eOt = [0, 0, 21.04]' * 0.01; % given in cm, thats why 0.01 % Orientation t wrt e
   phi = deg2rad(-44.98);
   eRt = [cos(phi), -sin(phi), 0; sin(phi), cos(phi), 0; 0, 0, 1];             
@@ -36,7 +35,6 @@ tool = true;
 if tool == true
     % Ex 3
     bOgt = [0.55, -0.3, 0.2]';               %[m] % Goal position
-
     bTt = bTe * eTt;                       % Base to Tool frame
     bRg = bTt(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axisof the robot tool frame initial configuration
 
@@ -48,19 +46,14 @@ else
 
 end
 
-
-
 %% Switch between the two cases (with and without the tool frame)
-bTg = zeros(4,4);   % Allocate bTg
 if tool == true
-    bTg(1:3,4) = bOgt;
+    % Ex 3 
+    bTg(1:3,4) = bOgt; % if controlling the tool frame
     bTg(1:3,1:3) = bRg;
     bTg(4,4) = 1;
-
-   %bTg = ...; % if controlling the tool frame
-
 else
-    % Just the goal frame
+    % Ex 2
     bTg(1:3,4) = bOge; %if controlling the ee frame
     bTg(1:3,1:3) = bRg;
     bTg(4,4) = 1;
@@ -90,21 +83,17 @@ for i = t
         tmp = geometricJacobian(model.franka,[q',0,0],'panda_link7'); %DO NOT EDIT
         bJe = tmp(1:6,1:7); %DO NOT EDIT
 
-        bTt = bTe * eTt;
-
+        bTt = bTe * eTt; % Update tool frame
         
+        [lin_err,ang_err] = ComputeError(bTt,bTg);
+        err = [ang_err; lin_err];
+
         % Rigid body Jacobian
         r = [0 -bTt(3,4), bTt(2,4);
              bTt(3,4) 0 -bTt(1,4);
              -bTt(2,4), bTt(1,4), 0];
         S = [eye(3), zeros(3); r, eye(3)];
         bJt = S * bJe;
-        
-        [lin_err,ang_err] = ComputeError(bTt,bTg);
-        lin_err;
-        ang_err;
-        err = [ang_err; lin_err];
-
         
     else % compute the error between the e-e frame and goal frame
         % Computing transformation matrix from base to end effector 
@@ -121,18 +110,18 @@ for i = t
     
        
     %% Compute the reference velocities
-    big_lambda = [ angular_gain * eye(3), zeros(3,3); ...
+    big_lambda = [ angular_gain * eye(3), zeros(3,3);
                     zeros(3,3), linear_gain * eye(3)];
    
-    x_dot = big_lambda * err % Goal velocity is zero 
+    x_dot = big_lambda * err; % Goal velocity is zero 
    
     %% Compute desired joint velocities 
-
     if tool == true
        q_dot = pinv(bJt) * x_dot;
     else
         q_dot = pinv(bJe) * x_dot;
     end
+
     %% Simulate the robot - implement the function KinematicSimulation()
     q = KinematicSimulation(q(1:7), q_dot,ts, qmin, qmax);
     % DO NOT EDIT - plot the robot moving
