@@ -34,14 +34,13 @@ tool = true;
 %% Goal definition 
 if tool == true
     % Ex 3
-    bOgt = [0.55, -0.3, 0.2]';               %[m] % Goal position
+    bOgt = [0.55, -0.3, 0.2]';             %[m] % Goal position
     bTt = bTe * eTt;                       % Base to Tool frame
     bRg = bTt(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axisof the robot tool frame initial configuration
 
 else
     % Ex 2 
     bOge = [0.55, -0.3, 0.2]';               %[m] % Goal position
-
     bRg = bTe(1:3, 1:3) * RotY(pi/6);      % Rotation around y-axis of the robot's end effector 
 
 end
@@ -85,8 +84,10 @@ for i = t
 
         bTt = bTe * eTt; % Update tool frame
         
-        [lin_err,ang_err] = ComputeError(bTt,bTg);
-        err = [ang_err; lin_err];
+        [lin_err, theta, v] = ComputeError(bTt,bTg);
+        rho = bTe(1:3,1:3) * (theta*v);
+        ang_err = rho;
+       
 
         % Rigid body Jacobian
         r = [0 -bTt(3,4), bTt(2,4);
@@ -102,11 +103,12 @@ for i = t
         tmp = geometricJacobian(model.franka,[q',0,0],'panda_link7'); %DO NOT EDIT
         bJe = tmp(1:6,1:7); %DO NOT EDIT
         
-        [lin_err,ang_err] = ComputeError(bTe,bTg);
-        lin_err;
-        ang_err;
-        err = [ang_err; lin_err]
+        [lin_err, theta, v] = ComputeError(bTe,bTg);
+        ang_err = bTe(1:3,1:3) * (theta * v);
     end
+    
+    err = [ang_err; lin_err];
+
     
        
     %% Compute the reference velocities
