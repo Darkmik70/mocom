@@ -15,12 +15,14 @@ iTj = eye(4);
 if linkNumber_i <= linkNumber_j
     % Calculate transformation from i to j frames
     for i = linkNumber_i : linkNumber_j
-        iTj = iTj * biTei(:,:,i);
+        iTj = iTj * biTei(:,:,i)
     end
 elseif linkNumber_i > linkNumber_j
     % Transformation goes in reverse
-    for i = linkNumber_j : linkNumber_i
-        iTj = biTei(:,:,i) * iTj;
+    i = linkNumber_i;
+    while (i >= linkNumber_j)
+        iTj = iTj * biTei(:,:,i)';
+        i = i -1;
     end
 else
     error('Link numbers are wrong');
