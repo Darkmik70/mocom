@@ -19,6 +19,7 @@ if linkNumber_i <= linkNumber_j
     end
 elseif linkNumber_i > linkNumber_j
     % Transformation goes in reverse
+    % Other way is to just perform inv(iTj) to get other frame
     i = linkNumber_i;
     while (i >= linkNumber_j)
         iTj = iTj * inv(biTei(:,:,i));
